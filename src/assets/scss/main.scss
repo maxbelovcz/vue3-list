@@ -9,7 +9,7 @@ html, body{
 }
 body{
     font-family: "Lato";
-    background-color: $--body-bg-color;
+    background: #f5f5f5;
     font-weight: 400;
 }
 body._lock{
@@ -32,4 +32,120 @@ body._lock{
 .page {
     flex: 1 1 auto;
 }
+.content{
+    position: relative;
+    max-width: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.05));
+    backdrop-filter: blur(100%);
+    -webkit-backdrop-filter: blur(10px);
+    &__wrapper{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+        width: 100%;
+        padding: 40px 0;
+    }
+}
+.post {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+    background: $--Wht;
+    padding: 25px;
+    border-radius: 25px;
+    &__text {
+        color: $--DARK;
+        text-align: left;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 100%;
+        & span{
+            font-size: 18px;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+    }
+}
+.button {
+    display: flex;
+    align-self: flex-end;
+    padding: 15px 20px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: $--GREY4;
+    color: $--DARK;
+    border: none;
+    outline: none;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    text-decoration: none;
+    transition: all .3s ease-out;
+    cursor: pointer;
+}
 
+.button:hover {
+    color: $--Wht;
+    background: $--RED;
+    transition: all .3s ease-out;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+    &__title{
+        color: $--Wht;
+        text-align: left;
+        @include adaptiv-font (34, 26, 2);
+        font-style: normal;
+        font-weight: 500;
+        line-height: 100%;
+    }
+
+    &.button {
+        align-self: flex-end;
+    }
+}
+
+.input {
+    border: none;
+    outline: none;
+    padding: 15px 20px 15px 0px;
+    width: 100%;
+    color: $--DARK;
+    background: transparent;
+    border-bottom: 1px solid $--body-bg-color;
+    font-family: "Lato";
+    font-weight: 400;
+    font-size: 20px;
+    font-style: normal;
+    line-height: normal;
+    transition: all .3s ease-out;
+    &::placeholder{
+        color: $--DARK;
+        transition: all .3s ease-out;
+    }
+    &:focus::placeholder{
+        color: transparent;
+        transition: all .3s ease-out;
+    }
+}
+.title{
+    color: $--body-bg-color;
+    text-align: center;
+    @include adaptiv-font (24, 20, 2);
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%;
+    margin-bottom: 15px;
+}
