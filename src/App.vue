@@ -1,40 +1,64 @@
 <template>
     <div class="wrapper">
         <main class="page">
-            <Form />
-            <Post :posts="posts" />
+            <div class="content">
+                <div class="container">
+                    <div class="content__wrapper">
+                        <div class="title">Страница с постами</div>
+                        <my-button @click="showModal">Создать пост</my-button>
+                    </div>
+                </div>
+            </div>
+            <my-modal v-model:show="modalVisible">
+                <Form @create="createPost" />
+            </my-modal>
+            <PostList :posts="posts" @remove="removePost" v-if="!isPostLoading" />
+            <div class="title" v-else>Идет загрузка...</div>
         </main>
     </div>
 </template>
 
 <script>
-import Post from './components/Post.vue';
+import PostList from './components/PostList.vue';
 import Form from './components/Form.vue';
+import axios from 'axios';
 export default {
     name: 'App',
-    components: { Post, Form },
+    components: {
+        PostList, Form
+    },
     data() {
         return {
-            posts: [
-                { id: 1, title: 'Наименование поста1', description: 'Описание поста1' },
-                { id: 2, title: 'Наименование поста2', description: 'Описание поста2' },
-                { id: 3, title: 'Наименование поста3', description: 'Описание поста3' }
-            ],
-            title: '',
-            description: ''
+            posts: [],
+            modalVisible: false,
+            isPostLoading: false,
         }
     },
     methods: {
-        createPost() {
-            const newPost = {
-                id: Date.now(),
-                title: this.title,
-                description: this.description
-            }
-            this.posts.push(newPost);
-            this.title = '';
-            this.description = '';
+        createPost(post) {
+            this.posts.push(post);
+            this.modalVisible = false;
         },
+        removePost(post) {
+            this.posts = this.posts.filter(p => p.id !== post.id)
+        },
+        showModal() {
+            this.modalVisible = true
+        },
+        async fetchPosts() {
+            try {
+                this.isPostLoading = true;
+                const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+                this.posts = response.data;
+            } catch (error) {
+                alert('Ошибка получения данных')
+            } finally {
+                this.isPostLoading = false;
+            }
+        }
+    },
+    mounted() {
+        this.fetchPosts();
     }
 }
 </script>
